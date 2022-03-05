@@ -6,10 +6,13 @@ class Example:
         self.width = 25
         self.height = 25
         self.collided = False
+        self.colour = [255,0,0]
 
     def draw(self, screen):
-        colour = [255,0,0]
-        pg.draw.rect(screen,colour,(self.x, self.y, self.width, self.height))
+        pg.draw.rect(screen,self.colour,(self.x, self.y, self.width, self.height))
 
     def update(self):
-        pass
+        if self.collided:
+            self.colour = [255,0,255]
+        else:
+            self.colour = [255, 0, 0]

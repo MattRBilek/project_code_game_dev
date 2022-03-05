@@ -20,7 +20,7 @@ class Game:
         self.fps = fps
         self.width = 600
         self.height = 600
-        self.people = [Example(50,50)]
+        self.people = [Example(50,50),Example(50,100),Example(74,74)]
 
     def game_initiating_window(self):
         if self.fps == 0:
