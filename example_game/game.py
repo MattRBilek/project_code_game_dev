@@ -2,7 +2,7 @@ import pygame as pg
 import time
 from copy import copy, deepcopy
 
-from test_person import Example
+from people.test_person import Example
 
 GRAY = [225,225,225]
 
