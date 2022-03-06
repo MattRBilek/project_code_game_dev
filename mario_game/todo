@@ -1,0 +1,33 @@
+game loop
+get input (if needed)
+update with input
+draw
+
+array of enemies:
+	onscreen
+	(x,y,width,height)
+	picture
+	draw
+	update(player)
+	grounded = bool
+
+player:
+	(x,y,width,height)
+	picture - rip picture off internet or make one if u want
+	draw
+	going_up = bool - if the player is rising
+	grounded = bool - dont manage game engine will tell you
+	update - fall if not grounded
+
+array of objects:
+	onscreen
+	(x,y,width,height)
+	picture
+	draw
+
+	winning flag (1)
+
+next week:
+
+more levels
+UI - user interface
