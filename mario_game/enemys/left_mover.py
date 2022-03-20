@@ -1,5 +1,5 @@
 import pygame as pg
-from mario_game.enemys.enemy import Enemy
+from project_code_game_dev.mario_game.enemys.enemy import Enemy
 
 
 class LeftMover(Enemy):
@@ -15,6 +15,8 @@ class LeftMover(Enemy):
         pass
 
     def update(self, keys):
+        if not self.on_screen:
+            return
         if not self.grounded:
             self.y += 3
         self.x -= 1

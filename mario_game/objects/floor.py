@@ -1,4 +1,4 @@
-from mario_game import constants
+from project_code_game_dev.mario_game import constants
 import pygame as pg
 
 

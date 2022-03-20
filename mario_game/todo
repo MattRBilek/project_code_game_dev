@@ -1,33 +1,19 @@
-game loop
-get input (if needed)
-update with input
-draw
+kill player if not on screen:
 
-array of enemies:
-	onscreen
-	(x,y,width,height)
-	picture
-	draw
-	update(player)
-	grounded = bool
-
-player:
-	(x,y,width,height)
-	picture - rip picture off internet or make one if u want
-	draw
-	going_up = bool - if the player is rising
-	grounded = bool - dont manage game engine will tell you
-	update - fall if not grounded
+some more enemies:
+    types
+    remove dead enemy
+    stop moving when updating screen
 
 array of objects:
-	onscreen
-	(x,y,width,height)
-	picture
-	draw
-
+	box with left right collisions
+	life orb
 	winning flag (1)
 
-next week:
+UI - start menu
 
-more levels
-UI - user interface
+more levels - load from json or something idk
+
+ADD images
+
+level editor

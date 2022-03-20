@@ -11,6 +11,7 @@ class TYPES(Enum):
     OBJECT = 2
     FLOOR = 3
 
+
 # returns true if object1 has collided with collider
 def collided(object1, collider):
     if object1.x < collider.x + collider.width and \

@@ -12,25 +12,24 @@ class Player:
         self.height = constants.SCREEN_HEIGHT/30 # TODO: make this scale with constancts.SCREEN_HEIGHT / some number
         self.colour = [200, 100, 100]
         self.grounded = False # should we fall
-        self.going_up = False # keep track of if u are jumping or not
         self.type = constants.TYPES.PLAYER
+        self.y_velocity = 0
 
     def draw(self, screen):
         pg.draw.rect(screen,self.colour,(self.x, self.y, self.width, self.height))
-        pass # TODO: draw picture of player
 
     def collide(self, world_object):
         pass # TODO: collided with object see type with type
 
     def update(self, keys):
-        if keys[pg.K_SPACE] and self.collide:
-            self.going_up = True
-            self.y -= 5
-            self.going_up = False
-            self.up = 6
-            # TODO: something while pressing space
+        if keys[pg.K_SPACE] and self.grounded:    # jumping
+            self.y_velocity = -20
+            self.y += self.y_velocity
 
-        if not self.grounded and not self.going_up:
-            self.y += 3
+        if not self.grounded:
+            self.y_velocity += 1
+            self.y_velocity = min(self.y_velocity, 10)
+
+            self.y += self.y_velocity
             # TODO: falling
         # TODO: anything else

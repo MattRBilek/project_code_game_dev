@@ -1,9 +1,10 @@
 import pygame as pg
-import time
 import constants
-from mario_game.enemys.left_mover import LeftMover
-from mario_game.objects.floor import Floor
-from mario_game.player import Player
+from project_code_game_dev.mario_game.enemys.left_mover import LeftMover
+from project_code_game_dev.mario_game.enemys.mover import Mover
+from project_code_game_dev.mario_game.objects.floor import Floor
+from project_code_game_dev.mario_game.objects.world_box import WorldBox
+from project_code_game_dev.mario_game.player import Player
 
 
 class Game:
@@ -12,8 +13,9 @@ class Game:
         self.width = constants.SCREEN_WIDTH
         self.height = constants.SCREEN_HEIGHT
         self.player = Player(int(constants.SCREEN_WIDTH / 2), int(constants.SCREEN_HEIGHT / 2))
-        self.enemies = [LeftMover(800, 100)]
+        self.enemies = [LeftMover(200, 100), Mover(750, 300)]
         self.objects = [Floor(600, 400)]
+        self.world_box = WorldBox()
         self.running = True
         self.screen = None
 
@@ -61,10 +63,15 @@ class Game:
 
     def update(self, keys):
         for enemy in self.enemies:
+            enemy.on_screen = False
             if constants.on_top_of(self.player, enemy):
                 enemy.dead = True  # player on top of enemy
             elif constants.collided(self.player, enemy):
                 self.running = False  # collided with player
+
+            if constants.collided(self.world_box, enemy):
+                enemy.on_screen = True
+
             enemy.grounded = False
             for world_object in self.objects:
                 if constants.on_top_of(enemy, world_object):
@@ -77,9 +84,22 @@ class Game:
                 self.player.grounded = True
                 self.player.collide(world_object)
 
+        # TODO: kill dead enemies
+
         self.player.update(keys)
         for enemy in self.enemies:
             enemy.update(keys)
 
+
     def handle_inputs(self, keys):
-        pass  # TODO: handle player inputs
+        update_speed = constants.SCREEN_WIDTH / self.fps / 5
+        if keys[pg.K_a]:
+            for enemy in self.enemies:
+                enemy.x -= update_speed
+            for world_object in self.objects:
+                world_object.x -= update_speed
+        if keys[pg.K_d]:
+            for enemy in self.enemies:
+                enemy.x += update_speed
+            for world_object in self.objects:
+                world_object.x += update_speed
