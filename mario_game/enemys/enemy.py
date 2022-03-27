@@ -1,4 +1,4 @@
-import project_code_game_dev.mario_game.constants as constants
+import constants as constants
 
 
 class Enemy:

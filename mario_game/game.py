@@ -1,10 +1,12 @@
 import pygame as pg
 import constants
-from project_code_game_dev.mario_game.enemys.left_mover import LeftMover
-from project_code_game_dev.mario_game.enemys.mover import Mover
-from project_code_game_dev.mario_game.objects.floor import Floor
-from project_code_game_dev.mario_game.objects.world_box import WorldBox
-from project_code_game_dev.mario_game.player import Player
+from enemys.dropper import Dropper
+from enemys.jumper import Jumper
+from enemys.flyer import Flyer
+from enemys.mover import Mover
+from objects.floor import Floor
+from objects.world_box import WorldBox
+from player import Player
 
 
 class Game:
@@ -13,7 +15,7 @@ class Game:
         self.width = constants.SCREEN_WIDTH
         self.height = constants.SCREEN_HEIGHT
         self.player = Player(int(constants.SCREEN_WIDTH / 2), int(constants.SCREEN_HEIGHT / 2))
-        self.enemies = [LeftMover(200, 100), Mover(750, 300)]
+        self.enemies = [Mover(750, 300), Flyer(300, 100), Jumper(750, 200), Dropper(750, 50)]
         self.objects = [Floor(600, 400)]
         self.world_box = WorldBox()
         self.running = True
@@ -66,6 +68,7 @@ class Game:
             enemy.on_screen = False
             if constants.on_top_of(self.player, enemy):
                 enemy.dead = True  # player on top of enemy
+                self.enemies.remove(enemy)
             elif constants.collided(self.player, enemy):
                 self.running = False  # collided with player
 

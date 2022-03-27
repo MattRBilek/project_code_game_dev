@@ -1,6 +1,6 @@
 import pygame as pg
-from project_code_game_dev.mario_game.enemys.enemy import Enemy
-from project_code_game_dev.mario_game.constants import *
+from enemys.enemy import Enemy
+from constants import *
 
 
 class Mover(Enemy):
