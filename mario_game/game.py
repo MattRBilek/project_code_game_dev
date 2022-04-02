@@ -4,6 +4,7 @@ from enemys.dropper import Dropper
 from enemys.jumper import Jumper
 from enemys.flyer import Flyer
 from enemys.mover import Mover
+from mario_game.objects.flag import Flag
 from objects.floor import Floor
 from objects.world_box import WorldBox
 from player import Player
@@ -15,8 +16,8 @@ class Game:
         self.width = constants.SCREEN_WIDTH
         self.height = constants.SCREEN_HEIGHT
         self.player = Player(int(constants.SCREEN_WIDTH / 2), int(constants.SCREEN_HEIGHT / 2))
-        self.enemies = [Mover(750, 300), Flyer(300, 100), Jumper(750, 200), Dropper(750, 50)]
-        self.objects = [Floor(600, 400)]
+        self.enemies = [Dropper(950,0)]
+        self.objects = [Floor(900,100),Floor(600, 400,width=1000)]
         self.world_box = WorldBox()
         self.running = True
         self.screen = None
@@ -77,31 +78,37 @@ class Game:
 
             enemy.grounded = False
             for world_object in self.objects:
-                if constants.on_top_of(enemy, world_object):
+                if constants.on_top_of(enemy, world_object) and world_object.type != constants.TYPES.FLAG:
                     enemy.grounded = True
                     enemy.collide(world_object)
 
         self.player.grounded = False
         for world_object in self.objects:
             if constants.on_top_of(self.player, world_object):
-                self.player.grounded = True
-                self.player.collide(world_object)
+                if world_object.type != constants.TYPES.FLAG:
+                    self.player.grounded = True
+                    self.player.collide(world_object)
+            if constants.collided(self.player, world_object):
+                if world_object.type == constants.TYPES.FLAG:
+                    self.running = False
 
-        # TODO: kill dead enemies
+        if self.player.y > constants.SCREEN_HEIGHT:
+            self.running = False
+
 
         self.player.update(keys)
         for enemy in self.enemies:
-            enemy.update(keys)
+            enemy.update(keys, self.player, self.enemies)
 
 
     def handle_inputs(self, keys):
         update_speed = constants.SCREEN_WIDTH / self.fps / 5
-        if keys[pg.K_a]:
+        if keys[pg.K_d]:
             for enemy in self.enemies:
                 enemy.x -= update_speed
             for world_object in self.objects:
                 world_object.x -= update_speed
-        if keys[pg.K_d]:
+        if keys[pg.K_a]:
             for enemy in self.enemies:
                 enemy.x += update_speed
             for world_object in self.objects:

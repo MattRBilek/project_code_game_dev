@@ -1,15 +1,16 @@
-from enum import Enum
+import enum
 
 GRAY = [225, 225, 225]
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 600
 
 
-class TYPES(Enum):
+class TYPES(enum.IntEnum):
     PLAYER = 0
     ENEMY = 1
     OBJECT = 2
     FLOOR = 3
+    FLAG = 4
 
 
 # returns true if object1 has collided with collider

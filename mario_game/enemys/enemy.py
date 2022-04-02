@@ -18,5 +18,5 @@ class Enemy:
     def collide(self, world_object):
         pass
 
-    def update(self, keys):
+    def update(self, keys, player=None, enemies=None):
         pass

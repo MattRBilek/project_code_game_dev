@@ -1,6 +1,6 @@
 import pygame as pg
-from enemys.enemy import Enemy
-from constants import *
+from mario_game.enemys.enemy import Enemy
+from mario_game.constants import *
 
 
 class Flyer(Enemy):
@@ -14,7 +14,7 @@ class Flyer(Enemy):
     def draw(self, screen):
         pg.draw.rect(screen, [255, 255, 255], (self.x, self.y, self.width, self.height))
 
-    def update(self, keys):
+    def update(self, keys, player=None, enemies=None):
         if not self.on_screen:
             return
         if self.x + self.width > self.origin + 100:

@@ -1,6 +1,6 @@
 import pygame as pg
-from enemys.enemy import Enemy
-from constants import *
+from mario_game.enemys.enemy import Enemy
+from mario_game.constants import *
 
 class Jumper(Enemy):
     def __init__(self, x, y):
@@ -19,7 +19,7 @@ class Jumper(Enemy):
             self.ground = world_object
 
 
-    def update(self, keys):
+    def update(self, keys, player=None, enemies=None):
         if not self.on_screen:
             return
 

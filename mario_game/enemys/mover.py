@@ -18,7 +18,7 @@ class Mover(Enemy):
         if world_object.type is TYPES.FLOOR:
             self.ground = world_object
 
-    def update(self, keys):
+    def update(self, keys, player=None, enemies=None):
         if not self.on_screen:
             return
 
