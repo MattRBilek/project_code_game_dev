@@ -25,7 +25,7 @@ class Charger(Enemy):
             return
         if not self.grounded:
             self.y += 10
-        if self.grounded is not None:
+        if self.grounded is not None and self.y + self.height == player.y + player.height:
             if player.x + 300 > self.x > player.x - 300:
                 self.charge = True
         if self.charge:
