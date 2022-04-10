@@ -1,6 +1,10 @@
 import pygame as pg
 import constants
+import time
 from enemys.dropper import Dropper
+from enemys.floater import Floater
+from enemys.shooter import Shooter
+from enemys.charger import Charger
 from enemys.jumper import Jumper
 from enemys.flyer import Flyer
 from enemys.mover import Mover
@@ -16,7 +20,7 @@ class Game:
         self.width = constants.SCREEN_WIDTH
         self.height = constants.SCREEN_HEIGHT
         self.player = Player(int(constants.SCREEN_WIDTH / 2), int(constants.SCREEN_HEIGHT / 2))
-        self.enemies = [Dropper(950,0)]
+        self.enemies = [Dropper(950,0), Floater(800, 20), Charger(1000, 300)]
         self.objects = [Floor(900,100),Floor(600, 400,width=1000)]
         self.world_box = WorldBox()
         self.running = True
@@ -72,7 +76,6 @@ class Game:
                 self.enemies.remove(enemy)
             elif constants.collided(self.player, enemy):
                 self.running = False  # collided with player
-
             if constants.collided(self.world_box, enemy):
                 enemy.on_screen = True
 
