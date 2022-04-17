@@ -24,7 +24,7 @@ class Dropper(Enemy):
             return
 
         if not self.grounded:
-            self.y += 10
+            self.y += 5
         elif self.ground is not None:
             # jump right x = self.ground.width + self.ground.x + self.width
             # jump left  x = self.ground.x - self.width

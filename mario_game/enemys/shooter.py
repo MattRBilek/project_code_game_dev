@@ -12,8 +12,8 @@ class Shooter(Enemy):
         self.width = 40
         self.height = 40
         self.ground = None
-        self.bullets = []
         self.clip = 0
+        self.old_epoch = 0.0
 
     def draw(self, screen):  # TODO: add is on screen
         pg.draw.rect(screen, [60, 40, 80], (self.x, self.y, self.width, self.height))
@@ -24,10 +24,13 @@ class Shooter(Enemy):
 
     def update(self, keys, player=None, enemies=None):
         if not self.on_screen:
+            self.old_epoch = time.time()
             return
         if not self.ground:
             self.y += 10
-        if time.time() % 4 == 0:
-            self.bullets.append(Bullet(self.x, self.y))
-            self.bullets[self.clip].draw(self.screen)
+
+        if time.time() - self.old_epoch > 4: # four seconds have passed
+            enemies.append(Bullet(self.x, self.y))
             self.clip += 1
+            self.old_epoch = time.time()
+

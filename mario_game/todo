@@ -1,25 +1,16 @@
 kill player if not on screen:
 
-Make real level that works.
 
-some more enemies:
-    flying dropper
-    shooter guy
-    charger (still need to be grounded)
-        - some x distance away
-        - same y level
-        - charges until someone is dead
-
-array of objects:
-	box with left right collisions
-	life orb
+next next: load from json or something
+{
+player : {x,y},
+enemies : { e1 : {type,x,y}, ... en : {tpye,x,y} },
+object : {o1 : { type, x,y, width,height }, ... }
+}
 
 next week: real level
 
-next: UI - start menu
 
-next: more levels - load from json or something idk
 
-next: ADD images
+next next next: pictures and music
 
-level editor

@@ -28,6 +28,28 @@ class Game:
         self.running = True
         self.screen = None
 
+    def __init__(self, fps=60, file_name=""):
+        self.fps = fps
+        self.width = constants.SCREEN_WIDTH
+        self.height = constants.SCREEN_HEIGHT
+        self.player = Player(int(constants.SCREEN_WIDTH / 2), int(constants.SCREEN_HEIGHT / 2))
+
+        self.timer = time.time()
+        self.objects = []
+        self.enemies = []
+        self.world_box = WorldBox()
+        self.running = True
+        self.screen = None
+        self.load_from_json(file_name)
+
+    def lead_from_json(self, file_name):
+        json_example = python.json()
+        tpye = json_example["enemies"]['1']["type"]
+        if type == "dropper":
+            self.enemies.append(Dropper(type))
+        pass
+
+
     def game_initiating_window(self):   # inits the windows
         if self.fps == 0:
             return
@@ -105,10 +127,6 @@ class Game:
         for enemy in self.enemies:
             enemy.update(keys, self.player, self.enemies)
 
-        #Creates and shoots a bullet enemy every 4 seconds, does not currently work
-        if self.timer % 4 == 0:
-            self.enemies.append(Bullet(1000, 200))
-            Bullet.draw(self, screen)
 
     def handle_inputs(self, keys):
         update_speed = constants.SCREEN_WIDTH / self.fps / 5

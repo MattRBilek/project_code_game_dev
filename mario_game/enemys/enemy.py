@@ -12,6 +12,7 @@ class Enemy:
         self.dead = False
         self.on_screen = False
 
+
     def draw(self, screen):
         pass
 
