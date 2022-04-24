@@ -10,13 +10,13 @@ class Player:
         self.y = y
         self.width = constants.SCREEN_WIDTH/25 # TODO: make this scale with constancts.SCREEN_WIDTH / some number
         self.height = constants.SCREEN_HEIGHT/30 # TODO: make this scale with constancts.SCREEN_HEIGHT / some number
-        self.colour = [200, 100, 100]
+        self.color = [200, 100, 100]
         self.grounded = False # should we fall
         self.type = constants.TYPES.PLAYER
         self.y_velocity = 0
 
     def draw(self, screen):
-        pg.draw.rect(screen,self.colour,(self.x, self.y, self.width, self.height))
+        pg.draw.rect(screen,self.color,(self.x, self.y, self.width, self.height))
 
     def collide(self, world_object):
         pass # TODO: collided with object see type with type

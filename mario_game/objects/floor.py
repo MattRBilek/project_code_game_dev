@@ -10,6 +10,7 @@ class Floor:
         self.height = height
         self.type = constants.TYPES.FLOOR
 
+
     def draw(self, screen):
         pg.draw.rect(screen, [255, 255, 255], (self.x, self.y, self.width, self.height))
 

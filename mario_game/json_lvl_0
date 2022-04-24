@@ -1,0 +1,5 @@
+{
+"enemies" : [{"type" : "dropper", "x": 500, "y" : 200}],
+"player" : {"x" : 50, "y" : 50},
+"objects" :[{"type" : "flag", "x": 200, "y" : 100}]
+}

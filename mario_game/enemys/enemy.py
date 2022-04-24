@@ -11,7 +11,16 @@ class Enemy:
         self.type = constants.TYPES.ENEMY
         self.dead = False
         self.on_screen = False
+        self.name = "base"
 
+
+    ### pass in dictionary that holds data
+    def load_from_json(self, dict):
+        pass ### use dict to extract data
+
+    ### store data to string and return
+    def strore_to_json(self):
+        return "{'type' : "+self.name+", 'x'"+self.x+",'y':"+self.y+"}"
 
     def draw(self, screen):
         pass

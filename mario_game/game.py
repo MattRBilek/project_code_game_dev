@@ -5,11 +5,11 @@ from enemys.dropper import Dropper
 from enemys.bullet import Bullet
 from enemys.floater import Floater
 from enemys.shooter import Shooter
-#from enemys.charger import Charger
-#from enemys.jumper import Jumper
-#from enemys.flyer import Flyer
-#from enemys.mover import Mover
-#from mario_game.objects.flag import Flag
+# from enemys.charger import Charger
+# from enemys.jumper import Jumper
+# from enemys.flyer import Flyer
+# from enemys.mover import Mover
+# from mario_game.objects.flag import Flag
 from objects.floor import Floor
 from objects.object import XObject
 from objects.world_box import WorldBox
@@ -22,9 +22,9 @@ class Game:
         self.width = constants.SCREEN_WIDTH
         self.height = constants.SCREEN_HEIGHT
         self.player = Player(int(constants.SCREEN_WIDTH / 2), int(constants.SCREEN_HEIGHT / 2))
-        self.enemies = [Dropper(950,0), Floater(800, 20), Shooter(1000, 200)]
+        self.enemies = [Dropper(950, 0), Floater(800, 20), Shooter(1000, 200)]
         self.timer = time.time()
-        self.objects = [Floor(900,100),Floor(600, 400,width=1000),XObject(700,340)]
+        self.objects = [Floor(900, 100), Floor(600, 400, width=1000), XObject(700, 340)]
         self.world_box = WorldBox()
         self.running = True
         self.screen = None
@@ -33,21 +33,30 @@ class Game:
         self.fps = fps
         self.width = constants.SCREEN_WIDTH
         self.height = constants.SCREEN_HEIGHT
-        self.player = Player(int(constants.SCREEN_WIDTH / 2), int(constants.SCREEN_HEIGHT / 2))
 
         self.timer = time.time()
-        self.objects = []
-        self.enemies = []
+
         self.world_box = WorldBox()
         self.running = True
         self.screen = None
-        self.load_from_json(file_name)
 
-    def load_from_json(self, file_name):
-        pass
+        json_data = {}  # load json from filename
+
+        self.objects = []  # update this with json data
+        self.enemies = []
+        self.player = Player(int(constants.SCREEN_WIDTH / 2), int(constants.SCREEN_HEIGHT / 2))
+
+        for enemy in json_data["enemies"]: # DO ENEMIES
+            if enemy["type"] == "dropper":
+                self.enemies.append(Dropper(enemy["x"], enemy["y"]))
+
+        for object in json_data["objects"]: # DO OBJECTS
+            pass
+
+        player_data = json_data["player"] # DO PLAYER
 
 
-    def game_initiating_window(self):   # inits the windows
+    def game_initiating_window(self):  # inits the windows
         if self.fps == 0:
             return
         self.screen = pg.display.set_mode((self.width, self.height), 0, 32)
@@ -110,7 +119,7 @@ class Game:
                 if constants.on_top_of(enemy, world_object) and world_object.type != constants.TYPES.FLAG:
                     enemy.grounded = True
                     enemy.y = world_object.y - enemy.height + 2
-                if constants.TYPES.OBJECT == world_object.type and constants.collided(enemy,world_object):
+                if constants.TYPES.OBJECT == world_object.type and constants.collided(enemy, world_object):
                     move = world_object.collide(enemy)
                     enemy.x += move
 
@@ -122,7 +131,7 @@ class Game:
         for world_object in self.objects:
             if constants.on_top_of(self.player, world_object):
                 if world_object.type != constants.TYPES.FLAG:
-                    self.player.y = world_object.y -self.player.height + 2
+                    self.player.y = world_object.y - self.player.height + 2
                     self.player.grounded = True
                     self.player.collide(world_object)
             if constants.collided(self.player, world_object):
@@ -134,7 +143,6 @@ class Game:
 
         if self.player.y > constants.SCREEN_HEIGHT:
             self.running = False
-
 
     def update_all_with_x(self, x):
         for enemy in self.enemies:

@@ -10,6 +10,8 @@ class Flag:
         self.height = height
         self.type = constants.TYPES.FLAG
 
+
+
     def draw(self, screen):
         pg.draw.rect(screen, [0, 255, 255], (self.x, self.y, self.width, self.height))
 

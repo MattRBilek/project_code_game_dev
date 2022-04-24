@@ -10,6 +10,7 @@ class XObject:
         self.height = height
         self.type = constants.TYPES.OBJECT
 
+
     def draw(self, screen):
         pg.draw.rect(screen, [100, 0, 0], (self.x, self.y, self.width, self.height))
 

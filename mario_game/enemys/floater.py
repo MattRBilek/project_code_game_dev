@@ -12,6 +12,7 @@ class Floater(Enemy):
         self.height = 50
         self.ground = None
         self.fall = False
+        self.name = "Floater"
 
     def draw(self, screen):
         pg.draw.rect(screen, [0, 40, 0], (self.x, self.y, self.width, self.height))
