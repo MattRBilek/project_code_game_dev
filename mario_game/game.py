@@ -1,7 +1,6 @@
 import pygame as pg
 import constants
 import time
-import json
 from enemys.dropper import Dropper
 from enemys.bullet import Bullet
 from enemys.floater import Floater
@@ -12,6 +11,7 @@ from enemys.shooter import Shooter
 #from enemys.mover import Mover
 #from mario_game.objects.flag import Flag
 from objects.floor import Floor
+from objects.object import XObject
 from objects.world_box import WorldBox
 from player import Player
 
@@ -24,12 +24,12 @@ class Game:
         self.player = Player(int(constants.SCREEN_WIDTH / 2), int(constants.SCREEN_HEIGHT / 2))
         self.enemies = [Dropper(950,0), Floater(800, 20), Shooter(1000, 200)]
         self.timer = time.time()
-        self.objects = [Floor(900,100),Floor(600, 400,width=1000)]
+        self.objects = [Floor(900,100),Floor(600, 400,width=1000),XObject(700,340)]
         self.world_box = WorldBox()
         self.running = True
         self.screen = None
 
-    def __init__(self, fps=60, file_name=""):
+    def new_game_from_json(self, fps, file_name):
         self.fps = fps
         self.width = constants.SCREEN_WIDTH
         self.height = constants.SCREEN_HEIGHT
@@ -44,7 +44,6 @@ class Game:
         self.load_from_json(file_name)
 
     def load_from_json(self, file_name):
-
         pass
 
 
@@ -91,11 +90,16 @@ class Game:
             pg.quit()
 
     def update(self, keys):
+
+        self.player.update(keys)
+        for enemy in self.enemies:
+            enemy.update(keys, self.player, self.enemies)
+
         for enemy in self.enemies:
             enemy.on_screen = False
             if constants.on_top_of(self.player, enemy):
                 enemy.dead = True  # player on top of enemy
-                self.enemies.remove(enemy)
+
             elif constants.collided(self.player, enemy):
                 self.running = False  # collided with player
             if constants.collided(self.world_box, enemy):
@@ -105,36 +109,42 @@ class Game:
             for world_object in self.objects:
                 if constants.on_top_of(enemy, world_object) and world_object.type != constants.TYPES.FLAG:
                     enemy.grounded = True
-                    enemy.collide(world_object)
+                    enemy.y = world_object.y - enemy.height + 2
+                if constants.TYPES.OBJECT == world_object.type and constants.collided(enemy,world_object):
+                    move = world_object.collide(enemy)
+                    enemy.x += move
+
+        for enemy in self.enemies:
+            if enemy.dead:
+                self.enemies.remove(enemy)
 
         self.player.grounded = False
         for world_object in self.objects:
             if constants.on_top_of(self.player, world_object):
                 if world_object.type != constants.TYPES.FLAG:
+                    self.player.y = world_object.y -self.player.height + 2
                     self.player.grounded = True
                     self.player.collide(world_object)
             if constants.collided(self.player, world_object):
                 if world_object.type == constants.TYPES.FLAG:
                     self.running = False
+                elif world_object.type == constants.TYPES.OBJECT:
+                    move = world_object.collide(self.player)
+                    self.update_all_with_x(-move)
 
         if self.player.y > constants.SCREEN_HEIGHT:
             self.running = False
 
 
-        self.player.update(keys)
+    def update_all_with_x(self, x):
         for enemy in self.enemies:
-            enemy.update(keys, self.player, self.enemies)
-
+            enemy.x += x
+        for world_object in self.objects:
+            world_object.x += x
 
     def handle_inputs(self, keys):
         update_speed = constants.SCREEN_WIDTH / self.fps / 5
         if keys[pg.K_d]:
-            for enemy in self.enemies:
-                enemy.x -= update_speed
-            for world_object in self.objects:
-                world_object.x -= update_speed
+            self.update_all_with_x(-update_speed)
         if keys[pg.K_a]:
-            for enemy in self.enemies:
-                enemy.x += update_speed
-            for world_object in self.objects:
-                world_object.x += update_speed
+            self.update_all_with_x(update_speed)

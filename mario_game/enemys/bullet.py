@@ -4,12 +4,13 @@ from constants import *
 
 
 class Bullet(Enemy):
-    def __init__(self, x, y, velocity = int(SCREEN_WIDTH / 40 / 2)):
+    def __init__(self, x, y, velocity=int(SCREEN_WIDTH / 40 / 2)):
         super().__init__(x, y)
         self.width = 50
         self.height = 50
         self.velocity = velocity
         self.ground = None
+        self.on_screen = True
 
     def draw(self, screen):  # TODO: add is on screen
         if not self.on_screen:
