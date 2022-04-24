@@ -1,0 +1,5 @@
+level1={
+    player (300, 500),
+    enemies {type, x, y}:[e1: {"shooter", 100, 200 }, e2: {"dropper", 300, 400}, e3:{"floater", 500, 600}],
+    objects {type, x, y, width, height}: [o1: {"floor", 600, 400, 1000, 10}, o2: {"floor", 900, 100, 500, 10}]
+}

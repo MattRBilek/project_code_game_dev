@@ -1,6 +1,7 @@
 import pygame as pg
 import constants
 import time
+import json
 from enemys.dropper import Dropper
 from enemys.bullet import Bullet
 from enemys.floater import Floater
@@ -42,11 +43,8 @@ class Game:
         self.screen = None
         self.load_from_json(file_name)
 
-    def lead_from_json(self, file_name):
-        json_example = python.json()
-        tpye = json_example["enemies"]['1']["type"]
-        if type == "dropper":
-            self.enemies.append(Dropper(type))
+    def load_from_json(self, file_name):
+
         pass
 
 
