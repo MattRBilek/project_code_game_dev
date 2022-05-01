@@ -45,14 +45,22 @@ class Game:
                 self.enemies.append(Dropper(enemy["x"], enemy["y"]))
             if enemy["type"] == "mover":
                 self.enemies.append(Mover(enemy["x"], enemy["y"]))
-            print(enemy["type"])
+            if enemy["type"] == "charger":
+                self.enemies.append(Charger(enemy["x"], enemy["y"]))
+            if enemy["type"] == "floater":
+                self.enemies.append(Floater(enemy["x"], enemy["y"]))
+            if enemy["type"] == "flyer":
+                self.enemies.append(Flyer(enemy["x"], enemy["y"]))
+            if enemy["type"] == "jumper":
+                self.enemies.append(Jumper(enemy["x"], enemy["y"]))
+            if enemy["type"] == "shooter":
+                self.enemies.append(Shooter(enemy["x"], enemy["y"]))
 
         for object in json_data["objects"]: # DO OBJECTS
             if object["type"] == "flag":
                 self.objects.append(Flag(object["x"], object["y"]))
             if object["type"] == "floor":
                 self.objects.append(Floor(object["x"], object["y"], object["width"], object["height"]))
-            pass
 
         player_data = json_data["player"] # DO PLAYER
         fp.close()
@@ -118,6 +126,7 @@ class Game:
             enemy.grounded = False
             for world_object in self.objects:
                 if constants.on_top_of(enemy, world_object) and world_object.type != constants.TYPES.FLAG:
+                    enemy.collide(world_object)
                     enemy.grounded = True
                     enemy.y = world_object.y - enemy.height + 2
                 if constants.TYPES.OBJECT == world_object.type and constants.collided(enemy, world_object):

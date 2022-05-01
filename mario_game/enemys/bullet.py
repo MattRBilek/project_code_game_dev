@@ -6,8 +6,8 @@ from constants import *
 class Bullet(Enemy):
     def __init__(self, x, y, velocity=int(SCREEN_WIDTH / 40 / 2)):
         super().__init__(x, y)
-        self.width = 50
-        self.height = 50
+        self.width = 10
+        self.height = 5
         self.velocity = velocity
         self.ground = None
         self.on_screen = True
