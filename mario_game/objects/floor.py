@@ -3,7 +3,7 @@ import pygame as pg
 
 
 class Floor:
-    def __init__(self, x, y, width=200, height=20):     # TODO: add is on screen
+    def __init__(self, x, y, width, height):     # TODO: add is on screen
         self.x = x
         self.y = y
         self.width = width

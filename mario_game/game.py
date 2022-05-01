@@ -1,15 +1,16 @@
 import pygame as pg
 import constants
 import time
+import json
 from enemys.dropper import Dropper
 from enemys.bullet import Bullet
 from enemys.floater import Floater
 from enemys.shooter import Shooter
-# from enemys.charger import Charger
-# from enemys.jumper import Jumper
-# from enemys.flyer import Flyer
-# from enemys.mover import Mover
-# from mario_game.objects.flag import Flag
+from enemys.charger import Charger
+from enemys.jumper import Jumper
+from enemys.flyer import Flyer
+from enemys.mover import Mover
+from objects.flag import Flag
 from objects.floor import Floor
 from objects.object import XObject
 from objects.world_box import WorldBox
@@ -17,19 +18,11 @@ from player import Player
 
 
 class Game:
-    def __init__(self, fps=60):
-        self.fps = fps
-        self.width = constants.SCREEN_WIDTH
-        self.height = constants.SCREEN_HEIGHT
-        self.player = Player(int(constants.SCREEN_WIDTH / 2), int(constants.SCREEN_HEIGHT / 2))
-        self.enemies = [Dropper(950, 0), Floater(800, 20), Shooter(1000, 200)]
-        self.timer = time.time()
-        self.objects = [Floor(900, 100), Floor(600, 400, width=1000), XObject(700, 340)]
-        self.world_box = WorldBox()
-        self.running = True
-        self.screen = None
+    def __init__(self):
+        self.new_game_from_json()
 
-    def new_game_from_json(self, fps, file_name):
+
+    def new_game_from_json(self, fps = 60):
         self.fps = fps
         self.width = constants.SCREEN_WIDTH
         self.height = constants.SCREEN_HEIGHT
@@ -40,7 +33,8 @@ class Game:
         self.running = True
         self.screen = None
 
-        json_data = {}  # load json from filename
+        fp = open("json_lvl_0")  # load json from filename
+        json_data = json.load(fp)
 
         self.objects = []  # update this with json data
         self.enemies = []
@@ -49,12 +43,19 @@ class Game:
         for enemy in json_data["enemies"]: # DO ENEMIES
             if enemy["type"] == "dropper":
                 self.enemies.append(Dropper(enemy["x"], enemy["y"]))
+            if enemy["type"] == "mover":
+                self.enemies.append(Mover(enemy["x"], enemy["y"]))
+            print(enemy["type"])
 
         for object in json_data["objects"]: # DO OBJECTS
+            if object["type"] == "flag":
+                self.objects.append(Flag(object["x"], object["y"]))
+            if object["type"] == "floor":
+                self.objects.append(Floor(object["x"], object["y"], object["width"], object["height"]))
             pass
 
         player_data = json_data["player"] # DO PLAYER
-
+        fp.close()
 
     def game_initiating_window(self):  # inits the windows
         if self.fps == 0:
