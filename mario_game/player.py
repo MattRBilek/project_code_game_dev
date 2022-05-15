@@ -14,9 +14,13 @@ class Player:
         self.grounded = False # should we fall
         self.type = constants.TYPES.PLAYER
         self.y_velocity = 0
+        self.left = False
+        self.right = False
+        self.walkRight = [pg.image.load('R1.png'), pg.image.load('R2.png'), pg.image.load('R3.png'), pg.image.load('R4.png')]
+        self.walkRight = [pg.image.load('L1.png'), pg.image.load('L2.png'), pg.image.load('L3.png'), pg.image.load('L4.png')]
 
     def draw(self, screen):
-        pg.draw.rect(screen,self.color,(self.x, self.y, self.width, self.height))
+        pg.image.load('R1.png')
 
     def collide(self, world_object):
         pass # TODO: collided with object see type with type

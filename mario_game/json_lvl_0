@@ -1,5 +1,11 @@
 {
-"enemies" : [{"type" : "dropper", "x": 800, "y" : 10}, {"type" : "mover", "x": 300, "y" : 400},  {"type" : "shooter", "x": 1000, "y" : 200}],
-"player" : {"x" : 50, "y" : 50},
-"objects" :[{"type" : "flag", "x": 1200, "y" : 300}, {"type" : "floor", "x": 50, "y" : 500, "width": 1000, "height": 10}, {"type" : "floor", "x": 800, "y" : 50, "width": 300, "height": 10}, {"type" : "floor", "x": 900, "y" : 350, "width": 500, "height": 10} ]
+"enemies" : [{"type" : "dropper", "x": 1800, "y" : 200},
+        {"type" : "mover", "x": 1200, "y" : 350}],
+"player" : {"x" : 200, "y" : 200},
+"objects" :[
+{"type" : "flag", "x": 1900, "y" : 400},
+{"type" : "floor", "x": 0, "y" : 550, "width": 1000, "height": 50},
+{"type" : "floor", "x": 1100, "y" : 400, "width": 400, "height": 50},
+{"type" : "floor", "x": 1700, "y" : 500, "width": 400, "height": 30},
+{"type" : "floor", "x": 1800, "y" : 250, "width": 50, "height": 50}]
 }
